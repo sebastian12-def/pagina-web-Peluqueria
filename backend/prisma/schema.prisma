@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String        @id @default(cuid())
+  name                String
+  email               String        @unique
+  phone               String?
+  passwordHash        String
+  role                String        @default("CLIENT")
+  mustChangePassword  Boolean       @default(false)
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  appointments        Appointment[] @relation("ClientAppointments")
+  createdAppointments Appointment[] @relation("CreatedAppointments")
+}
+
+model Service {
+  id              String        @id @default(cuid())
+  name            String        @unique
+  description     String?
+  priceCents      Int
+  durationMinutes Int
+  imageUrl        String?
+  isActive        Boolean       @default(true)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  appointments    Appointment[]
+}
+
+model Appointment {
+  id          String            @id @default(cuid())
+  clientId    String
+  serviceId   String
+  createdById String?
+  startsAt    DateTime
+  endsAt      DateTime
+  status      String   @default("PENDING")
+  notes       String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  client      User              @relation("ClientAppointments", fields: [clientId], references: [id])
+  createdBy   User?             @relation("CreatedAppointments", fields: [createdById], references: [id])
+  service     Service           @relation(fields: [serviceId], references: [id])
+  payment     Payment?
+
+  @@index([startsAt, endsAt])
+}
+
+model BusinessHour {
+  id        String  @id @default(cuid())
+  dayOfWeek Int     @unique
+  opensAt   String
+  closesAt  String
+  isOpen    Boolean @default(true)
+}
+
+model BlockedSlot {
+  id        String   @id @default(cuid())
+  startsAt  DateTime
+  endsAt    DateTime
+  reason    String?
+  createdAt DateTime @default(now())
+}
+
+model BarberStatus {
+  id              String             @id @default(cuid())
+  status          String
+  manualOverride  Boolean            @default(false)
+  busyUntil       DateTime?
+  note            String?
+  updatedAt       DateTime           @updatedAt
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  appointmentId String        @unique
+  amountCents   Int
+  status        String   @default("PENDING")
+  method        String?
+  reference     String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  appointment   Appointment   @relation(fields: [appointmentId], references: [id])
+}
+
+model BusinessSetting {
+  id          String   @id @default(cuid())
+  name        String
+  address     String
+  phone       String?
+  instagram   String?
+  qrImageUrl  String?
+  latitude    Float?
+  longitude   Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
