@@ -1,5 +1,5 @@
 import React from "react";
-import { CalendarDays, Check, Clock, CreditCard, LogOut, MapPin, Plus, Scissors, Shield, User, Wallet } from "lucide-react";
+import { BarChart3, CalendarDays, Check, Clock, CreditCard, LogOut, MapPin, Plus, ReceiptText, Scissors, Shield, User, Wallet } from "lucide-react";
 import L from "leaflet";
 import { useEffect, useMemo, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
@@ -238,7 +238,7 @@ function AdminDashboard({ user }) {
     await api(`/api/admin/payments/${appointment.id}`, {
       method: "PUT",
       body: {
-        amountCents: appointment.service.priceCents,
+        amountCents: nextStatus === "PARTIAL" ? Math.round(appointment.service.priceCents * 0.5) : appointment.service.priceCents,
         status: nextStatus,
         method: "QR",
         reference: nextStatus === "PAID" ? "Confirmado manualmente" : ""
@@ -289,13 +289,29 @@ function AdminDashboard({ user }) {
     await load();
   }
 
+  const activeAppointments = appointments.filter((appointment) => !["CANCELLED", "NO_SHOW"].includes(appointment.status));
+  const completedAppointments = appointments.filter((appointment) => appointment.status === "COMPLETED");
+  const paidRevenue = appointments.reduce((sum, appointment) => appointment.payment?.status === "PAID" ? sum + appointment.service.priceCents : sum, 0);
+  const partialRevenue = appointments.reduce((sum, appointment) => appointment.payment?.status === "PARTIAL" ? sum + (appointment.payment.amountCents || 0) : sum, 0);
+  const pendingRevenue = activeAppointments.reduce((sum, appointment) => appointment.payment?.status !== "PAID" ? sum + appointment.service.priceCents : sum, 0);
+  const paidAppointments = appointments.filter((appointment) => appointment.payment);
+
   return (
     <div className="grid gap-5 xl:grid-cols-[1fr_390px]">
       <section className="space-y-5">
         {user.mustChangePassword && <div className="rounded-lg border border-ember bg-ember/15 p-4 text-sm text-white">Este admin usa una contrasena temporal. Cambiala desde el endpoint de seguridad antes de produccion.</div>}
         <StatusCard status={status} />
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <MetricCard label="Citas activas" value={activeAppointments.length} detail={`${completedAppointments.length} atendidas`} />
+          <MetricCard label="Ingresos pagados" value={formatMoney(paidRevenue)} detail={`${formatMoney(partialRevenue)} en abonos`} />
+          <MetricCard label="Por cobrar" value={formatMoney(pendingRevenue)} detail="Reservas pendientes o abonadas" />
+          <MetricCard label="Servicios" value={services.length} detail="Disponibles para reservar" />
+        </div>
         <Panel title="Citas agendadas" icon={<CalendarDays />}>
           <AppointmentList appointments={appointments} onStatus={updateAppointment} onPayment={updatePayment} />
+        </Panel>
+        <Panel title="Historial de pagos" icon={<ReceiptText />}>
+          <PaymentHistory appointments={paidAppointments} />
         </Panel>
       </section>
       <aside className="space-y-5">
@@ -334,7 +350,7 @@ function AdminDashboard({ user }) {
           <form onSubmit={saveService} className="space-y-3">
             <Input label="Nombre" value={serviceForm.name} onChange={(name) => setServiceForm({ ...serviceForm, name })} />
             <Input label="Descripcion" value={serviceForm.description} onChange={(description) => setServiceForm({ ...serviceForm, description })} />
-            <Input label="Precio en centavos" type="number" value={serviceForm.priceCents} onChange={(priceCents) => setServiceForm({ ...serviceForm, priceCents })} />
+            <Input label="Precio en pesos" type="number" value={Math.round(serviceForm.priceCents / 100)} onChange={(price) => setServiceForm({ ...serviceForm, priceCents: Number(price || 0) * 100 })} />
             <Input label="Duracion minutos" type="number" value={serviceForm.durationMinutes} onChange={(durationMinutes) => setServiceForm({ ...serviceForm, durationMinutes })} />
             <button className="w-full rounded-md bg-acid px-3 py-2 font-black text-ink">Crear servicio</button>
           </form>
@@ -345,6 +361,39 @@ function AdminDashboard({ user }) {
           </div>
         </Panel>
       </aside>
+    </div>
+  );
+}
+
+function MetricCard({ label, value, detail }) {
+  return (
+    <div className="street-panel rounded-lg p-4">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <p className="text-xs font-bold uppercase text-steel">{label}</p>
+        <BarChart3 size={18} className="text-acid" />
+      </div>
+      <p className="text-2xl font-black text-white">{value}</p>
+      <p className="mt-1 text-xs text-steel">{detail}</p>
+    </div>
+  );
+}
+
+function PaymentHistory({ appointments }) {
+  if (!appointments.length) return <p className="text-sm text-steel">Todavia no hay pagos registrados.</p>;
+
+  return (
+    <div className="space-y-2">
+      {appointments.map((appointment) => (
+        <div key={appointment.id} className="grid gap-2 rounded-md bg-white/5 p-3 text-sm md:grid-cols-[1.2fr_1fr_0.8fr_0.8fr]">
+          <div>
+            <p className="font-black text-white">{appointment.client?.name || "Cliente"}</p>
+            <p className="text-xs text-steel">{appointment.service.name}</p>
+          </div>
+          <p className="text-steel">{formatDateTime(appointment.startsAt)}</p>
+          <p className="font-bold text-white">{paymentText(appointment.payment.status)}</p>
+          <p className="font-black text-acid">{formatMoney(appointment.payment.amountCents || appointment.service.priceCents)}</p>
+        </div>
+      ))}
     </div>
   );
 }
