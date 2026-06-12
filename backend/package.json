@@ -4,7 +4,9 @@
   "type": "module",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "tsx watch src/server.js",
+    "dev": "tsx src/server.js",
+    "dev:watch": "tsx watch src/server.js",
+    "start": "node src/server.js",
     "build": "node --check src/server.js",
     "lint": "node --check src/server.js",
     "prisma:generate": "prisma generate",

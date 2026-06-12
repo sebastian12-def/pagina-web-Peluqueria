@@ -31,9 +31,19 @@ Incluye:
 Pendientes:
 
 - terminar limpieza menor de raiz cuando se cierren logs locales;
-- confirmar que corre desde cero;
-- dividir `frontend/src/App.jsx` en componentes;
 - separar rutas admin del backend cuando empiece a crecer mas.
+
+Completado:
+
+- documentos comerciales movidos a `docs/propuesta`;
+- archivos generados o viejos movidos a `archive`;
+- `frontend/src/App.jsx` dividido en vistas, componentes y features.
+- build de frontend verificado;
+- build de backend verificado;
+- login cliente/admin probado;
+- vista cliente validada sin historial administrativo;
+- vista admin validada con agenda, pagos y resumen contable;
+- flujo de reserva y cancelacion probado por API.
 
 ## Fase siguiente: piloto publicado
 

@@ -23,6 +23,20 @@ archive/        Archivos generados o antiguos que no son parte del flujo princip
 
 Los archivos `.env`, logs, bases locales, `node_modules` y builds generados no se suben a GitHub.
 
+## Estructura del frontend
+
+```txt
+frontend/src/App.jsx                         Decide vista por rol
+frontend/src/views/AuthScreen.jsx            Login y registro
+frontend/src/views/ClientDashboard.jsx       Vista del cliente final
+frontend/src/views/AdminDashboard.jsx        Vista del peluquero/admin
+frontend/src/components/                     Componentes compartidos
+frontend/src/features/appointments/          Listado y acciones de citas
+frontend/src/features/admin/                 Historial y controles admin
+frontend/src/features/business/              Mapa y datos del negocio
+frontend/src/lib/                            Textos y utilidades simples
+```
+
 ## Primer arranque
 
 1. Instalar dependencias, si aun no estan instaladas:
@@ -79,6 +93,7 @@ Usuarios demo:
 - Guia de demo: `docs/DEMO.md`
 - Roadmap: `docs/ROADMAP.md`
 - Despliegue piloto: `docs/DEPLOYMENT.md`
+- Datos que faltan del negocio: `docs/DATOS_NECESARIOS.md`
 - Propuesta comercial: `docs/propuesta/`
 
 ## Lo que debes preparar por aparte

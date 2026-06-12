@@ -40,3 +40,14 @@ Cliente:
 ## Mensaje para presentar
 
 Esta es una prueba piloto funcional. Permite validar si los clientes realmente usan reservas web antes de invertir en pagos automaticos, WhatsApp o funciones avanzadas.
+
+## Que no se debe prometer todavia
+
+- Pago automatico con Wompi.
+- Notificaciones automaticas por WhatsApp.
+- App movil en Play Store o App Store.
+- Facturacion electronica.
+- Reportes avanzados.
+- Multiples peluqueros.
+
+Estas funciones se pueden plantear como fases adicionales despues de validar la prueba piloto.
