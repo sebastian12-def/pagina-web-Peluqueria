@@ -6,7 +6,7 @@ Prototipo funcional para agendamiento de citas de peluqueria/barberia con roles 
 
 - Frontend: React + Vite + Tailwind CSS
 - Backend: Node.js + Express + Prisma
-- Base de datos local: SQLite
+- Base de datos piloto: Supabase PostgreSQL
 - Auth: JWT + bcrypt
 - Mapa: Leaflet + OpenStreetMap
 

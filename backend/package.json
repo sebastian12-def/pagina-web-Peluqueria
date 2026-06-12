@@ -8,6 +8,7 @@
     "dev:watch": "tsx watch src/server.js",
     "start": "node src/server.js",
     "build": "node --check src/server.js",
+    "render:build": "prisma generate && prisma db push && npm run seed",
     "lint": "node --check src/server.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma db push",

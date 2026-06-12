@@ -57,7 +57,7 @@ Validado:
 
 ### Reviewer
 
-La demo local esta conectada correctamente contra SQLite local. Esto no prueba Supabase/Render/Vercel todavia; esa sera otra fase cuando existan URLs y variables de entorno reales.
+La demo local fue probada correctamente antes de la migracion a Supabase. La siguiente prueba completa debe hacerse contra Render, Vercel y Supabase con las variables reales configuradas.
 
 ## Endpoints probados
 
@@ -159,7 +159,7 @@ Despues de la prueba fueron eliminados de la base local.
 
 Estas pruebas validan la demo local. Para probar el piloto publicado falta:
 
-- cambiar Prisma de SQLite a PostgreSQL;
+- desplegar Prisma contra PostgreSQL/Supabase desde Render;
 - conectar Supabase;
 - configurar Render;
 - configurar Vercel;

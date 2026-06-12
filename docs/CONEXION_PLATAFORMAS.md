@@ -71,7 +71,7 @@ Debes hacer:
 
 ```txt
 Root Directory: backend
-Build Command: npm install && npx prisma generate
+Build Command: npm install && npm run render:build
 Start Command: npm start
 ```
 
@@ -146,10 +146,10 @@ VITE_API_URL=https://backend-web-fksu.onrender.com
 
 Antes de publicar:
 
-1. Cambiar Prisma de SQLite a PostgreSQL.
-2. Confirmar `DATABASE_URL`.
-3. Ejecutar migracion o `prisma db push`.
-4. Ejecutar seed una sola vez.
+1. Prisma ya quedo configurado para PostgreSQL.
+2. Confirmar `DATABASE_URL` en Render.
+3. Render ejecutara `prisma db push` durante el build.
+4. Render ejecutara el seed durante el build.
 5. Probar login admin/cliente.
 6. Probar reserva.
 
