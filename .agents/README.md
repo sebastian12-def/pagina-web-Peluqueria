@@ -11,6 +11,7 @@ Este proyecto usa agentes como roles de trabajo. No entrenan un modelo nuevo; ay
 - `database.md`: Prisma, Supabase, migraciones y modelo de datos.
 - `devops-costos.md`: Render, Vercel, Supabase, dominio y costos en COP.
 - `seguridad.md`: permisos, SQL injection, secretos, JWT, CORS, migraciones y despliegue seguro.
+- `asistente.md`: recordatorios, proximos pasos y explicaciones para el usuario.
 - `reviewer.md`: seguridad, errores, permisos y calidad antes de entregar.
 - `documentador.md`: README, manuales, demo, propuesta y entrega.
 

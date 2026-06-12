@@ -3,7 +3,7 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import { ZodError } from "zod";
-import { assertProductionConfig, config } from "./config.js";
+import { assertProductionConfig, config, isOriginAllowed } from "./config.js";
 import { adminRouter } from "./routes/adminRoutes.js";
 import { authRouter } from "./routes/authRoutes.js";
 import { clientRouter } from "./routes/clientRoutes.js";
@@ -13,7 +13,13 @@ const app = express();
 
 assertProductionConfig();
 app.use(helmet());
-app.use(cors({ origin: config.frontendUrl, credentials: true }));
+app.use(cors({
+  origin(origin, callback) {
+    if (isOriginAllowed(origin)) return callback(null, true);
+    return callback(new Error("Origen no permitido por CORS."));
+  },
+  credentials: true
+}));
 app.use(express.json({ limit: "100kb" }));
 app.use(morgan("dev"));
 

@@ -1,4 +1,8 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+const DEFAULT_API_URL = typeof window !== "undefined"
+  ? `${window.location.protocol}//${window.location.hostname}:4000`
+  : "http://localhost:4000";
+
+const API_URL = import.meta.env.VITE_API_URL || DEFAULT_API_URL;
 
 export function getToken() {
   return localStorage.getItem("token");
