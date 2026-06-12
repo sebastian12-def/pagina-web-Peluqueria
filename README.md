@@ -10,6 +10,19 @@ Prototipo funcional para agendamiento de citas de peluqueria/barberia con roles 
 - Auth: JWT + bcrypt
 - Mapa: Leaflet + OpenStreetMap
 
+## Estructura del proyecto
+
+```txt
+backend/        API, Prisma, rutas y reglas de negocio
+frontend/       App React para cliente y admin
+docs/           Roadmap, guia de demo, despliegue y propuesta
+.agents/        Roles de trabajo para organizar decisiones y revisiones
+scripts/        Scripts auxiliares
+archive/        Archivos generados o antiguos que no son parte del flujo principal
+```
+
+Los archivos `.env`, logs, bases locales, `node_modules` y builds generados no se suben a GitHub.
+
 ## Primer arranque
 
 1. Instalar dependencias, si aun no estan instaladas:
@@ -55,9 +68,18 @@ Usuarios demo:
 - Registro e inicio de sesion de clientes.
 - Panel cliente para reservar, ver citas, cancelar y consultar ubicacion/QR.
 - Panel admin para ver citas, cambiar estado, marcar pago pendiente/abonado/pagado.
+- Resumen contable basico para admin.
+- Historial de pagos para admin.
 - Gestion basica de servicios.
 - Edicion de datos del negocio, direccion, redes, mapa y URL del QR.
 - Validacion para evitar reservas duplicadas en el mismo horario.
+
+## Documentos utiles
+
+- Guia de demo: `docs/DEMO.md`
+- Roadmap: `docs/ROADMAP.md`
+- Despliegue piloto: `docs/DEPLOYMENT.md`
+- Propuesta comercial: `docs/propuesta/`
 
 ## Lo que debes preparar por aparte
 

@@ -30,9 +30,7 @@ Incluye:
 
 Pendientes:
 
-- ordenar raiz del proyecto;
-- mover documentos comerciales a `docs/propuesta`;
-- mover archivos generados o viejos a `archive`;
+- terminar limpieza menor de raiz cuando se cierren logs locales;
 - confirmar que corre desde cero;
 - dividir `frontend/src/App.jsx` en componentes;
 - separar rutas admin del backend cuando empiece a crecer mas.
