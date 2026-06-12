@@ -150,14 +150,15 @@ adminRouter.put("/barber-status", async (req, res, next) => {
       note: z.string().max(200).nullable().optional()
     }).parse(req.body);
 
-    const current = await prisma.barberStatus.findFirst();
     const payload = {
       ...data,
       busyUntil: data.busyUntil ? new Date(data.busyUntil) : null
     };
-    const status = current
-      ? await prisma.barberStatus.update({ where: { id: current.id }, data: payload })
-      : await prisma.barberStatus.create({ data: payload });
+    const status = await prisma.barberStatus.upsert({
+      where: { key: "default" },
+      update: payload,
+      create: { key: "default", ...payload }
+    });
 
     res.json({ status });
   } catch (error) {
@@ -198,10 +199,11 @@ adminRouter.put("/business", async (req, res, next) => {
       longitude: z.number().optional().nullable()
     }).parse(req.body);
 
-    const current = await prisma.businessSetting.findFirst();
-    const business = current
-      ? await prisma.businessSetting.update({ where: { id: current.id }, data })
-      : await prisma.businessSetting.create({ data });
+    const business = await prisma.businessSetting.upsert({
+      where: { key: "default" },
+      update: data,
+      create: { key: "default", ...data }
+    });
 
     res.json({ business });
   } catch (error) {

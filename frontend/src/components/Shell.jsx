@@ -7,7 +7,7 @@ export function Shell({ user, onLogout, children }) {
       <header className="border-b border-white/10 bg-black/50">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
           <div>
-            <p className="text-xs uppercase text-acid">Peluqueria Urbana</p>
+            <p className="text-xs uppercase text-acid">Peluquería Urbana</p>
             <h1 className="text-xl font-black text-white">Reservas, agenda y pagos manuales.</h1>
           </div>
           <div className="flex items-center gap-3">

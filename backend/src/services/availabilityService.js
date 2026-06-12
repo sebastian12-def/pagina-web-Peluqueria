@@ -2,11 +2,11 @@ import { prisma } from "../db.js";
 import { addMinutes, parseDayTime, overlaps, toTimeString } from "../utils/time.js";
 
 export async function getBusinessSetting() {
-  return prisma.businessSetting.findFirst();
+  return prisma.businessSetting.findUnique({ where: { key: "default" } });
 }
 
 export async function getEffectiveBarberStatus(now = new Date()) {
-  const manual = await prisma.barberStatus.findFirst();
+  const manual = await prisma.barberStatus.findUnique({ where: { key: "default" } });
   const dayOfWeek = now.getDay();
   const businessHour = await prisma.businessHour.findFirst({ where: { dayOfWeek } });
 
@@ -72,7 +72,7 @@ export async function assertSlotAvailable({ serviceId, startsAt, appointmentIdTo
   const businessHour = await prisma.businessHour.findFirst({ where: { dayOfWeek } });
 
   if (!businessHour?.isOpen) {
-    const error = new Error("El negocio no abre ese dia.");
+    const error = new Error("El negocio no abre ese día.");
     error.status = 400;
     throw error;
   }
@@ -81,7 +81,7 @@ export async function assertSlotAvailable({ serviceId, startsAt, appointmentIdTo
   const close = parseDayTime(start, businessHour.closesAt);
 
   if (start < open || end > close) {
-    const error = new Error("La cita esta fuera del horario laboral.");
+    const error = new Error("La cita está fuera del horario laboral.");
     error.status = 400;
     throw error;
   }
@@ -91,7 +91,7 @@ export async function assertSlotAvailable({ serviceId, startsAt, appointmentIdTo
   });
 
   if (blocked) {
-    const error = new Error("Ese horario esta bloqueado.");
+    const error = new Error("Ese horario está bloqueado.");
     error.status = 409;
     throw error;
   }
@@ -106,7 +106,7 @@ export async function assertSlotAvailable({ serviceId, startsAt, appointmentIdTo
   });
 
   if (existing) {
-    const error = new Error("Ese horario ya esta reservado.");
+    const error = new Error("Ese horario ya está reservado.");
     error.status = 409;
     throw error;
   }

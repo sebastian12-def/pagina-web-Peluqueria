@@ -113,7 +113,7 @@ export function AdminDashboard({ user }) {
   return (
     <div className="grid gap-5 xl:grid-cols-[1fr_390px]">
       <section className="space-y-5">
-        {user.mustChangePassword && <div className="rounded-lg border border-ember bg-ember/15 p-4 text-sm text-white">Este admin usa una contrasena temporal. Cambiala desde el endpoint de seguridad antes de produccion.</div>}
+        {user.mustChangePassword && <div className="rounded-lg border border-ember bg-ember/15 p-4 text-sm text-white">Este admin usa una contraseña temporal. Cámbiala desde el endpoint de seguridad antes de producción.</div>}
         <StatusCard status={status} />
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <MetricCard label="Citas activas" value={activeAppointments.length} detail={`${completedAppointments.length} atendidas`} />
@@ -132,8 +132,8 @@ export function AdminDashboard({ user }) {
         <Panel title="Datos del negocio" icon={<MapPin />}>
           <form onSubmit={saveBusiness} className="space-y-3">
             <Input label="Nombre" value={businessForm.name} onChange={(name) => setBusinessForm({ ...businessForm, name })} />
-            <Input label="Direccion" value={businessForm.address} onChange={(address) => setBusinessForm({ ...businessForm, address })} />
-            <Input label="Telefono" value={businessForm.phone} onChange={(phone) => setBusinessForm({ ...businessForm, phone })} />
+            <Input label="Dirección" value={businessForm.address} onChange={(address) => setBusinessForm({ ...businessForm, address })} />
+            <Input label="Teléfono" value={businessForm.phone} onChange={(phone) => setBusinessForm({ ...businessForm, phone })} />
             <Input label="Instagram" value={businessForm.instagram} onChange={(instagram) => setBusinessForm({ ...businessForm, instagram })} />
             <Input label="URL del QR" value={businessForm.qrImageUrl} onChange={(qrImageUrl) => setBusinessForm({ ...businessForm, qrImageUrl })} />
             <div className="grid grid-cols-2 gap-2">
@@ -156,16 +156,16 @@ export function AdminDashboard({ user }) {
             <Input label="Nota" value={statusForm.note} onChange={(note) => setStatusForm({ ...statusForm, note })} />
             <div className="grid grid-cols-2 gap-2">
               <button className="rounded-md bg-acid px-3 py-2 font-black text-ink">Guardar</button>
-              <button type="button" onClick={clearManualStatus} className="rounded-md bg-white/10 px-3 py-2 font-bold text-white">Automatico</button>
+              <button type="button" onClick={clearManualStatus} className="rounded-md bg-white/10 px-3 py-2 font-bold text-white">Automático</button>
             </div>
           </form>
         </Panel>
         <Panel title="Nuevo servicio" icon={<Plus />}>
           <form onSubmit={saveService} className="space-y-3">
             <Input label="Nombre" value={serviceForm.name} onChange={(name) => setServiceForm({ ...serviceForm, name })} />
-            <Input label="Descripcion" value={serviceForm.description} onChange={(description) => setServiceForm({ ...serviceForm, description })} />
+            <Input label="Descripción" value={serviceForm.description} onChange={(description) => setServiceForm({ ...serviceForm, description })} />
             <Input label="Precio en pesos" type="number" value={Math.round(serviceForm.priceCents / 100)} onChange={(price) => setServiceForm({ ...serviceForm, priceCents: Number(price || 0) * 100 })} />
-            <Input label="Duracion minutos" type="number" value={serviceForm.durationMinutes} onChange={(durationMinutes) => setServiceForm({ ...serviceForm, durationMinutes })} />
+            <Input label="Duración en minutos" type="number" value={serviceForm.durationMinutes} onChange={(durationMinutes) => setServiceForm({ ...serviceForm, durationMinutes })} />
             <button className="w-full rounded-md bg-acid px-3 py-2 font-black text-ink">Crear servicio</button>
           </form>
         </Panel>

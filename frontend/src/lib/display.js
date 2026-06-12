@@ -6,7 +6,7 @@ export function statusText(status) {
     CONFIRMED: "Confirmada",
     COMPLETED: "Atendida",
     CANCELLED: "Cancelada",
-    NO_SHOW: "No asistio"
+    NO_SHOW: "No asistió"
   }[status] || status;
 }
 

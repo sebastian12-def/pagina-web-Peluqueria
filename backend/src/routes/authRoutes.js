@@ -51,7 +51,7 @@ authRouter.post("/login", authLimiter, async (req, res, next) => {
     const user = await prisma.user.findUnique({ where: { email: data.email.toLowerCase() } });
 
     if (!user || !(await verifyPassword(data.password, user.passwordHash))) {
-      return res.status(401).json({ message: "Correo o contrasena incorrectos." });
+      return res.status(401).json({ message: "Correo o contraseña incorrectos." });
     }
 
     return res.json({ token: signToken(user), user: publicUser(user) });
@@ -72,7 +72,7 @@ authRouter.post("/change-password", requireAuth, authLimiter, async (req, res, n
     }).parse(req.body);
 
     if (!(await verifyPassword(data.currentPassword, req.user.passwordHash))) {
-      return res.status(401).json({ message: "La contrasena actual no coincide." });
+      return res.status(401).json({ message: "La contraseña actual no coincide." });
     }
 
     const user = await prisma.user.update({

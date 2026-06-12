@@ -51,6 +51,9 @@ model Appointment {
   payment     Payment?
 
   @@index([startsAt, endsAt])
+  @@index([clientId, startsAt])
+  @@index([serviceId])
+  @@index([status, startsAt, endsAt])
 }
 
 model BusinessHour {
@@ -67,10 +70,13 @@ model BlockedSlot {
   endsAt    DateTime
   reason    String?
   createdAt DateTime @default(now())
+
+  @@index([startsAt, endsAt])
 }
 
 model BarberStatus {
   id              String             @id @default(cuid())
+  key             String             @unique @default("default")
   status          String
   manualOverride  Boolean            @default(false)
   busyUntil       DateTime?
@@ -88,10 +94,13 @@ model Payment {
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   appointment   Appointment   @relation(fields: [appointmentId], references: [id])
+
+  @@index([status, updatedAt])
 }
 
 model BusinessSetting {
   id          String   @id @default(cuid())
+  key         String   @unique @default("default")
   name        String
   address     String
   phone       String?

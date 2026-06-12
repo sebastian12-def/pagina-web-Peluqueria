@@ -56,26 +56,25 @@ async function main() {
     }
   }
 
-  const status = await prisma.barberStatus.findFirst();
-  if (!status) {
-    await prisma.barberStatus.create({
-      data: { status: "AVAILABLE", manualOverride: false }
-    });
-  }
+  await prisma.barberStatus.upsert({
+    where: { key: "default" },
+    update: {},
+    create: { key: "default", status: "AVAILABLE", manualOverride: false }
+  });
 
-  const setting = await prisma.businessSetting.findFirst();
-  if (!setting) {
-    await prisma.businessSetting.create({
-      data: {
-        name: process.env.BUSINESS_NAME || "Peluqueria Urbana",
-        address: process.env.BUSINESS_ADDRESS || "Calle 45 #12-34, Bogota",
-        phone: "3000000000",
-        instagram: "@peluqueriaurbana",
-        latitude: Number(process.env.BUSINESS_LAT || 4.711),
-        longitude: Number(process.env.BUSINESS_LNG || -74.0721)
-      }
-    });
-  }
+  await prisma.businessSetting.upsert({
+    where: { key: "default" },
+    update: {},
+    create: {
+      key: "default",
+      name: process.env.BUSINESS_NAME || "Peluquería Urbana",
+      address: process.env.BUSINESS_ADDRESS || "Calle 45 #12-34, Bogotá",
+      phone: "3000000000",
+      instagram: "@peluqueriaurbana",
+      latitude: Number(process.env.BUSINESS_LAT || 4.711),
+      longitude: Number(process.env.BUSINESS_LNG || -74.0721)
+    }
+  });
 }
 
 main()

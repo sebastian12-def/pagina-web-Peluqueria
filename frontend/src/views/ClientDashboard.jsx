@@ -41,7 +41,7 @@ export function ClientDashboard() {
   async function book(startsAt) {
     try {
       await api("/api/client/appointments", { method: "POST", body: { serviceId: selectedService, startsAt } });
-      setMessage("Cita registrada. El peluquero la vera en su panel.");
+      setMessage("Cita registrada. El peluquero la verá en su panel.");
       await load();
     } catch (err) {
       setMessage(err.message);
@@ -74,11 +74,11 @@ export function ClientDashboard() {
         </Panel>
       </section>
       <aside className="space-y-5">
-        <Panel title="Ubicacion" icon={<MapPin />}>
+        <Panel title="Ubicación" icon={<MapPin />}>
           {business && <BusinessMap business={business} />}
         </Panel>
         <Panel title="QR del negocio" icon={<CreditCard />}>
-          {business?.qrImageUrl ? <img src={business.qrImageUrl} alt="QR del negocio" className="mx-auto max-h-52 rounded-md" /> : <p className="text-sm text-steel">El peluquero configurara el QR en el panel.</p>}
+          {business?.qrImageUrl ? <img src={business.qrImageUrl} alt="QR del negocio" className="mx-auto max-h-52 rounded-md" /> : <p className="text-sm text-steel">El peluquero configurará el QR en el panel.</p>}
         </Panel>
       </aside>
     </div>
