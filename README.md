@@ -91,6 +91,7 @@ Usuarios demo:
 ## Documentos utiles
 
 - Guia de demo: `docs/DEMO.md`
+- Reporte de pruebas API: `docs/API_TEST_REPORT.md`
 - Roadmap: `docs/ROADMAP.md`
 - Despliegue piloto: `docs/DEPLOYMENT.md`
 - Conexion Supabase/Render/Vercel: `docs/CONEXION_PLATAFORMAS.md`

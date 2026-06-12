@@ -16,7 +16,7 @@ app.use(helmet());
 app.use(cors({
   origin(origin, callback) {
     if (isOriginAllowed(origin)) return callback(null, true);
-    return callback(new Error("Origen no permitido por CORS."));
+    return callback(null, false);
   },
   credentials: true
 }));
