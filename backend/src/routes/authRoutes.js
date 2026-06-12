@@ -2,9 +2,11 @@ import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "../db.js";
 import { requireAuth } from "../middleware/auth.js";
+import { rateLimit } from "../middleware/rateLimit.js";
 import { hashPassword, publicUser, signToken, verifyPassword } from "../utils/auth.js";
 
 export const authRouter = Router();
+const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 30 });
 
 const registerSchema = z.object({
   name: z.string().min(2),
@@ -18,7 +20,7 @@ const loginSchema = z.object({
   password: z.string().min(1)
 });
 
-authRouter.post("/register", async (req, res, next) => {
+authRouter.post("/register", authLimiter, async (req, res, next) => {
   try {
     const data = registerSchema.parse(req.body);
     const existing = await prisma.user.findUnique({ where: { email: data.email.toLowerCase() } });
@@ -43,7 +45,7 @@ authRouter.post("/register", async (req, res, next) => {
   }
 });
 
-authRouter.post("/login", async (req, res, next) => {
+authRouter.post("/login", authLimiter, async (req, res, next) => {
   try {
     const data = loginSchema.parse(req.body);
     const user = await prisma.user.findUnique({ where: { email: data.email.toLowerCase() } });
@@ -62,7 +64,7 @@ authRouter.get("/me", requireAuth, async (req, res) => {
   return res.json({ user: publicUser(req.user) });
 });
 
-authRouter.post("/change-password", requireAuth, async (req, res, next) => {
+authRouter.post("/change-password", requireAuth, authLimiter, async (req, res, next) => {
   try {
     const data = z.object({
       currentPassword: z.string().min(1),

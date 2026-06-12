@@ -10,6 +10,7 @@ Este proyecto usa agentes como roles de trabajo. No entrenan un modelo nuevo; ay
 - `backend.md`: API, permisos, reservas, pagos y reglas de negocio.
 - `database.md`: Prisma, Supabase, migraciones y modelo de datos.
 - `devops-costos.md`: Render, Vercel, Supabase, dominio y costos en COP.
+- `seguridad.md`: permisos, SQL injection, secretos, JWT, CORS, migraciones y despliegue seguro.
 - `reviewer.md`: seguridad, errores, permisos y calidad antes de entregar.
 - `documentador.md`: README, manuales, demo, propuesta y entrega.
 
@@ -28,6 +29,7 @@ Primero se estabiliza la version demo. No se agregan funciones grandes si antes 
 1. El arquitecto define fase y alcance.
 2. Producto valida si la funcion pertenece a demo, piloto o fase futura.
 3. Frontend/backend/database implementan solo lo necesario.
-4. Reviewer valida seguridad, roles y funcionamiento.
-5. Documentador actualiza instrucciones y material para cliente.
-6. DevOps-costos revisa despliegue y costos cuando se vaya a publicar.
+4. Seguridad revisa riesgos, secretos, permisos y base de datos.
+5. Reviewer valida calidad, roles y funcionamiento.
+6. Documentador actualiza instrucciones y material para cliente.
+7. DevOps-costos revisa despliegue y costos cuando se vaya a publicar.

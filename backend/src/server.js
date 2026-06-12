@@ -3,7 +3,7 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import { ZodError } from "zod";
-import { config } from "./config.js";
+import { assertProductionConfig, config } from "./config.js";
 import { adminRouter } from "./routes/adminRoutes.js";
 import { authRouter } from "./routes/authRoutes.js";
 import { clientRouter } from "./routes/clientRoutes.js";
@@ -11,9 +11,10 @@ import { publicRouter } from "./routes/publicRoutes.js";
 
 const app = express();
 
+assertProductionConfig();
 app.use(helmet());
 app.use(cors({ origin: config.frontendUrl, credentials: true }));
-app.use(express.json());
+app.use(express.json({ limit: "100kb" }));
 app.use(morgan("dev"));
 
 app.get("/health", (_req, res) => {

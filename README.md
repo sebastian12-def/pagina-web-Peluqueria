@@ -93,6 +93,7 @@ Usuarios demo:
 - Guia de demo: `docs/DEMO.md`
 - Roadmap: `docs/ROADMAP.md`
 - Despliegue piloto: `docs/DEPLOYMENT.md`
+- Seguridad: `docs/SECURITY.md`
 - Datos que faltan del negocio: `docs/DATOS_NECESARIOS.md`
 - Propuesta comercial: `docs/propuesta/`
 
